@@ -67,24 +67,17 @@ export default function Home() {
       }
       setPhotoResult(result)
       
-      // Format product information for the agent
-      // Return the exact product type with description
-      const productInfo = data.description 
-        ? `${data.product} - ${data.description}`
-        : data.product
-      
       // Add message to transcript showing the result
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: `📸 Photo captured! I've identified this as: ${productInfo}`,
+          content: `📸 Photo captured! I've identified this as: ${data.product}`,
           timestamp: new Date(),
         },
       ])
       
-      // Return the complete product information to the agent
-      return productInfo
+      return data.product
     } catch (error) {
       console.error('Error processing photo:', error)
       setError('Failed to process photo. Please try again.')

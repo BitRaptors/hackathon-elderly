@@ -1,0 +1,73 @@
+Build on current UI. Add these features. NOTE: Eleven Labs agent integration handled separately - just prepare state management and mock states for now.
+
+## 1. State-based icons (swap the mic)
+
+IDLE: Keep mic icon with soft pulse animation
+LISTENING: Animated EAR icon - simple illustrated style, thick coral lines, with sound wave lines animating INWARD toward the ear
+SPEAKING: Animated MOUTH icon - simple lips illustration, with sound wave lines animating OUTWARD
+
+Icons should be same size/position as current mic. Smooth crossfade transition between states.
+
+## 2. Animations
+
+IDLE: 
+- Slow breathing pulse on outer circle (scale 1.0 → 1.03 → 1.0, 3s loop)
+- Soft glow pulse on the coral ring
+
+LISTENING:
+- Ear icon slight tilt animation
+- 3 curved lines on left side of ear, animating inward (opacity/scale pulse)
+- Circle border pulses with voice activity
+
+SPEAKING:
+- Mouth with 3 sound wave arcs on each side
+- Waves animate outward in sequence
+- Subtle bounce on the mouth
+
+THINKING (between listening and speaking):
+- Three dots "..." fade in/out sequence
+
+## 3. State Management (prep for Eleven Labs)
+
+Create state hook with:
+- currentState: 'idle' | 'listening' | 'thinking' | 'speaking'
+- transcript: array of { role: 'user' | 'assistant', text: string }
+
+For now: tap on main circle cycles through states (idle → listening → thinking → speaking → idle) for demo/testing
+
+Export functions for later integration:
+- startConversation()
+- stopConversation()
+- addTranscript(role, text)
+
+## 4. Camera Flow
+
+On camera tap:
+- Full screen overlay, dark background
+- Camera viewfinder in center (16:9 ratio)
+- White frame corners as guide
+- Text above: "Point at your TV"
+- Capture button at bottom
+- X to close top-right
+
+After capture:
+- Brief "Scanning..." overlay (1.5s)
+- Return to main screen
+- Store image in state (n8n webhook later)
+
+## 5. Transcript Toggle
+
+- Small chat bubble icon bottom center (between camera and repeat)
+- Very subtle styling
+- When ON: slide up panel from bottom (60% height max)
+  - User messages right-aligned (coral bubble)
+  - Assistant messages left-aligned (white bubble)
+  - Auto-scroll to latest
+  - Swipe down or tap toggle to close
+- When OFF: hidden completely
+
+## Keep
+- Current color scheme
+- Current button positions (camera left, repeat right)
+- Mobile-only viewport
+- Minimal aesthetic
